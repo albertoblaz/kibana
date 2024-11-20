@@ -765,18 +765,6 @@ export const CspPolicyTemplateForm = memo<PackagePolicyReplaceDefineStepExtensio
     const [isLoading, setIsLoading] = useState(validationResultsNonNullFields.length > 0);
     const [canFetchIntegration, setCanFetchIntegration] = useState(true);
 
-    // delaying component rendering due to a race condition issue from Fleet
-    // TODO: remove this workaround when the following issue is resolved:
-    // https://github.com/elastic/kibana/issues/153246
-    useEffect(() => {
-      // using validation?.vars to know if the newPolicy state was reset due to race condition
-      if (validationResultsNonNullFields.length > 0) {
-        // Forcing rerender to recover from the validation errors state
-        setIsLoading(true);
-      }
-      setTimeout(() => setIsLoading(false), 200);
-    }, [validationResultsNonNullFields]);
-
     useEffect(() => {
       setIsLoading(getIsSubscriptionValid.isLoading);
     }, [getIsSubscriptionValid.isLoading]);
