@@ -41,6 +41,7 @@ import { useKibana } from '../../common/lib/kibana';
 
 import { EmptyState } from '../components/empty_state';
 import { AdditionalControls } from '../components/additional_controls';
+import { RiskBadge } from '../components/risk_badge';
 import { AssetInventorySearchBar } from '../components/search_bar';
 
 import { useDataViewContext } from '../hooks/data_view_context';
@@ -91,7 +92,7 @@ const columnHeaders: Record<string, string> = {
 const customCellRenderer = (rows: DataTableRecord[]) => ({
   'asset.risk': ({ rowIndex }: EuiDataGridCellValueElementProps) => {
     const risk = rows[rowIndex].flattened['asset.risk'] as number;
-    return risk;
+    return <RiskBadge risk={risk} />;
   },
   'asset.criticality': ({ rowIndex }: EuiDataGridCellValueElementProps) => {
     const criticality = rows[rowIndex].flattened[
