@@ -28,6 +28,7 @@ import { withDataView } from '../../../../../common/components/with_data_view';
 import { StatefulEventContext } from '../../../../../common/components/events_viewer/stateful_event_context';
 import type { TimelineItem } from '../../../../../../common/search_strategy';
 import { useKibana } from '../../../../../common/lib/kibana';
+
 import type {
   ColumnHeaderOptions,
   OnFetchMoreRecords,
