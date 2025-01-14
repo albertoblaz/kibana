@@ -11,8 +11,8 @@ import { i18n } from '@kbn/i18n';
 import type { Filter } from '@kbn/es-query';
 import { useKibana } from '../../common/lib/kibana';
 import { FiltersGlobal } from '../../common/components/filters_global/filters_global';
-import { useDataViewContext } from './data_view_context';
-import type { AssetsBaseURLQuery } from './use_asset_inventory_data_table';
+import { useDataViewContext } from '../hooks/data_view_context';
+import type { AssetsBaseURLQuery } from '../hooks/use_asset_inventory_data_table';
 
 type SearchBarQueryProps = Pick<AssetsBaseURLQuery, 'query' | 'filters'>;
 

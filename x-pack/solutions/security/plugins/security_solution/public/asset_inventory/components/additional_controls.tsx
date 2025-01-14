@@ -10,8 +10,8 @@ import { type DataView } from '@kbn/data-views-plugin/common';
 import { FormattedMessage } from '@kbn/i18n-react';
 import { getAbbreviatedNumber } from '@kbn/cloud-security-posture-common';
 import { FieldsSelectorModal } from './fields_selector_modal';
-import { useFieldsModal } from './use_fields_modal';
-import { useStyles } from './use_styles';
+import { useFieldsModal } from '../hooks/use_fields_modal';
+import { useStyles } from '../hooks/use_styles';
 
 const ASSET_INVENTORY_FIELDS_SELECTOR_OPEN_BUTTON = 'assetInventoryFieldsSelectorOpenButton';
 

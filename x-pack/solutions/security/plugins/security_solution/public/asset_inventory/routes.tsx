@@ -13,7 +13,7 @@ import { SecurityPageName } from '../app/types';
 import { ASSET_INVENTORY_PATH } from '../../common/constants';
 import { PluginTemplateWrapper } from '../common/components/plugin_template_wrapper';
 import { SecurityRoutePageWrapper } from '../common/components/security_route_page_wrapper';
-import { DataViewContext } from './components/data_view_context';
+import { DataViewContext } from './hooks/data_view_context';
 import { AssetInventoryContainer } from './pages';
 
 // Initializing react-query

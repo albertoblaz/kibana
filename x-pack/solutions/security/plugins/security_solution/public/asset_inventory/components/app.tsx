@@ -38,16 +38,16 @@ import useLocalStorage from 'react-use/lib/useLocalStorage';
 import { type CriticalityLevelWithUnassigned } from '../../../common/entity_analytics/asset_criticality/types';
 import { AssetCriticalityBadge } from '../../entity_analytics/components/asset_criticality/asset_criticality_badge';
 import { useKibana } from '../../common/lib/kibana';
-
-import { useDataViewContext } from './data_view_context';
-import { EmptyState } from './empty_state';
-import { useStyles } from './use_styles';
-import { AdditionalControls } from './additional_controls';
+import { useDataViewContext } from '../hooks/data_view_context';
+import { useStyles } from '../hooks/use_styles';
 import {
   useAssetInventoryDataTable,
   type AssetsBaseURLQuery,
   type URLQuery,
-} from './use_asset_inventory_data_table';
+} from '../hooks/use_asset_inventory_data_table';
+
+import { EmptyState } from './empty_state';
+import { AdditionalControls } from './additional_controls';
 import { RiskBadge } from './risk_badge';
 import { AssetInventorySearchBar } from './search_bar';
 
