@@ -7,7 +7,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useKibana } from '@kbn/kibana-react-plugin/public';
-import { DEFAULT_SPACE_ID } from '@kbn/spaces-plugin/common';
+// import { DEFAULT_SPACE_ID } from '@kbn/spaces-plugin/common';
 import { CspClientPluginStartDeps } from '../..';
 
 /**
@@ -16,15 +16,17 @@ import { CspClientPluginStartDeps } from '../..';
 export const useDataView = (dataViewId: string) => {
   const {
     data: { dataViews },
-    spaces,
+    // spaces,
   } = useKibana<CspClientPluginStartDeps>().services;
   return useQuery(['useDataView', dataViewId], async () => {
     // Using default space if spaces is not available or for serverless projects where spaces are not enabled.
-    const currentSpaceId = spaces ? (await spaces.getActiveSpace()).id : DEFAULT_SPACE_ID;
-    const dataViewIdCurrentSpace = `${dataViewId}-${currentSpaceId}`;
-    const dataView = await dataViews.get(dataViewIdCurrentSpace);
+    // const currentSpaceId = spaces ? (await spaces.getActiveSpace()).id : DEFAULT_SPACE_ID;
+    // const dataViewIdCurrentSpace = `${dataViewId}-${currentSpaceId}`;
+    // const dataView = await dataViews.get(dataViewIdCurrentSpace);
+    const dataView = await dataViews.get(dataViewId);
     if (!dataView) {
-      throw new Error(`Data view not found [${dataViewIdCurrentSpace}]`);
+      // throw new Error(`Data view not found [${dataViewIdCurrentSpace}]`);
+      throw new Error(`Data view not found [${dataViewId}]`);
     }
 
     return dataView;

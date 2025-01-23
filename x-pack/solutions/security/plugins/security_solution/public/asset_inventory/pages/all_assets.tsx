@@ -52,6 +52,7 @@ import {
   type AssetsBaseURLQuery,
   type URLQuery,
 } from '../hooks/use_asset_inventory_data_table';
+import { MAX_ASSETS_TO_LOAD } from '../constants';
 
 const gridStyle: EuiDataGridStyle = {
   border: 'horizontal',
@@ -59,8 +60,6 @@ const gridStyle: EuiDataGridStyle = {
   stripes: false,
   header: 'underline',
 };
-
-const MAX_ASSETS_TO_LOAD = 500; // equivalent to MAX_FINDINGS_TO_LOAD in @kbn/cloud-security-posture-common
 
 const title = i18n.translate('xpack.securitySolution.assetInventory.allAssets.tableRowTypeLabel', {
   defaultMessage: 'assets',
