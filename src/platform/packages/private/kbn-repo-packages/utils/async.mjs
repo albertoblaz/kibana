@@ -28,7 +28,7 @@ const settle = async (fn, item) => {
  * @param {(v: T) => Promise<T2>} mapFn
  * @returns {Promise<T2[]>}
  */
-function asyncMapWithLimit(source, limit, mapFn) {
+export function asyncMapWithLimit(source, limit, mapFn) {
   return new Promise((resolve, reject) => {
     if (limit < 1) {
       reject(new Error('invalid limit, must be greater than 0'));
@@ -104,5 +104,3 @@ function asyncMapWithLimit(source, limit, mapFn) {
     runMore();
   });
 }
-
-module.exports = { asyncMapWithLimit };

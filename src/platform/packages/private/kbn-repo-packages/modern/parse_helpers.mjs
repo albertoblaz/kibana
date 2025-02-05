@@ -19,7 +19,7 @@ const PACKAGE_TYPE_MAP = {
   'test-helper': true,
 };
 
-const PACKAGE_TYPES = /** @type {Array<import('./types').KibanaPackageType>} */ (
+export const PACKAGE_TYPES = /** @type {Array<import('./types').KibanaPackageType>} */ (
   /** @type {unknown} */ (Object.keys(PACKAGE_TYPE_MAP))
 );
 
@@ -29,7 +29,7 @@ const PLUGIN_ID_PATTERN = /^[a-z][a-zA-Z_]*$/;
  * @param {unknown} v
  * @returns {v is string}
  */
-function isSomeString(v) {
+export function isSomeString(v) {
   return typeof v === 'string' && !!v;
 }
 
@@ -37,7 +37,7 @@ function isSomeString(v) {
  * @param {unknown} v
  * @returns {v is Record<string, unknown>}
  */
-function isObj(v) {
+export function isObj(v) {
   return typeof v === 'object' && v !== null;
 }
 
@@ -45,7 +45,7 @@ function isObj(v) {
  * @param {unknown} v
  * @returns {v is string}
  */
-function isValidPluginId(v) {
+export function isValidPluginId(v) {
   return typeof v === 'string' && PLUGIN_ID_PATTERN.test(v);
 }
 
@@ -53,7 +53,7 @@ function isValidPluginId(v) {
  * @param {unknown} v
  * @returns {v is import('./types').KibanaPackageType}
  */
-function isValidPkgType(v) {
+export function isValidPkgType(v) {
   return typeof v === 'string' && Object.hasOwn(PACKAGE_TYPE_MAP, v);
 }
 
@@ -61,7 +61,7 @@ function isValidPkgType(v) {
  * @param {unknown} v
  * @returns {v is string[]}
  */
-function isArrOfStrings(v) {
+export function isArrOfStrings(v) {
   return Array.isArray(v) && v.every(isSomeString);
 }
 
@@ -69,16 +69,6 @@ function isArrOfStrings(v) {
  * @param {unknown} v
  * @returns {v is string[]}
  */
-function isArrOfIds(v) {
+export function isArrOfIds(v) {
   return Array.isArray(v) && v.every(isValidPluginId);
 }
-
-module.exports = {
-  PACKAGE_TYPES,
-  isSomeString,
-  isObj,
-  isValidPluginId,
-  isValidPkgType,
-  isArrOfIds,
-  isArrOfStrings,
-};

@@ -11,7 +11,7 @@ import Path from 'path';
 
 import { REPO_ROOT } from '../lib/paths.mjs';
 import { run, spawnStreaming } from '../lib/spawn.mjs';
-import External from '../lib/external_packages.js';
+import { packages } from '../lib/external_packages.mjs';
 
 /** @type {import('../lib/command').Command} */
 export const command = {
@@ -41,7 +41,7 @@ export const command = {
     const exclude = args.getStringValues('exclude') ?? [];
     const include = args.getStringValues('include') ?? [];
 
-    const { getPackages } = External['@kbn/repo-packages']();
+    const { getPackages } = packages['@kbn/repo-packages']();
     const packages = getPackages(REPO_ROOT);
     for (const { manifest, pkg, normalizedRepoRelativeDir } of packages) {
       if (

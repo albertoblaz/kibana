@@ -7,11 +7,11 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Path = require('path');
-const Fs = require('fs');
-const { inspect } = require('util');
+import Path from 'path';
+import Fs from 'fs';
+import { inspect } from 'util';
 
-const {
+import {
   isSomeString,
   isObj,
   isValidPluginId,
@@ -19,10 +19,10 @@ const {
   isArrOfIds,
   isArrOfStrings,
   PACKAGE_TYPES,
-} = require('./parse_helpers');
-const { getGitRepoRootSync } = require('./get_git_repo_root');
-const { parse } = require('../utils/jsonc');
-const { isValidPluginCategoryInfo, PLUGIN_CATEGORY } = require('./plugin_category_info');
+} from './parse_helpers.mjs';
+import { getGitRepoRootSync } from './get_git_repo_root.mjs';
+import { parse } from '../utils/jsonc.mjs';
+import { isValidPluginCategoryInfo, PLUGIN_CATEGORY } from './plugin_category_info.mjs';
 
 /**
  * @param {string} key
@@ -341,7 +341,7 @@ function validatePackageManifest(parsed, repoRoot, path) {
  * @param {string} repoRoot
  * @param {string} path
  */
-function readPackageManifest(repoRoot, path) {
+export function readPackageManifest(repoRoot, path) {
   let content;
   try {
     content = Fs.readFileSync(path, 'utf8');
@@ -367,5 +367,3 @@ function readPackageManifest(repoRoot, path) {
     throw new Error(`Unable to parse [${path}]: ${error.message}`);
   }
 }
-
-module.exports = { readPackageManifest };

@@ -7,12 +7,6 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-var force = require('./force')(process.argv);
-
-var uid = process.getuid && process.getuid();
-var isRoot = require('./is_root')(uid);
-
-if (isRoot && !force) {
-  console.error('Kibana should not be run as root.  Use --allow-root to continue.');
-  process.exit(1);
+export function isRootFn(uid) {
+  return uid === 0;
 }

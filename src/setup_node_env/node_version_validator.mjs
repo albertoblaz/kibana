@@ -7,7 +7,9 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-var pkg = require('../../package.json');
+// import pkg from '../../package.json';
+const { default: pkg } = await import('../../package.json', { assert: { type: 'json' } }); // eslint-disable-line
+// import pkg from '../../package.json' assert { type: 'json' }; // eslint-disable-line
 
 // Note: This is written in ES5 so we can run this before anything else
 // and gives support for older NodeJS versions

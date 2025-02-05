@@ -7,10 +7,10 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Path = require('path');
-const Fs = require('fs');
-const ChildProcess = require('child_process');
-const { promisify } = require('util');
+import Path from 'path';
+import Fs from 'fs';
+import ChildProcess from 'child_process';
+import { promisify } from 'util';
 
 const execAsync = promisify(ChildProcess.execFile);
 
@@ -66,7 +66,7 @@ function getGitFlags(repoRoot, include = undefined, exclude = undefined) {
  * @param {string[] | undefined} exclude exclude specific absolute paths
  * @returns {Promise<Iterable<string>>}
  */
-async function getRepoRels(repoRoot, include = undefined, exclude = undefined) {
+export async function getRepoRels(repoRoot, include = undefined, exclude = undefined) {
   const proc = await execAsync('git', getGitFlags(repoRoot, include, exclude), {
     cwd: repoRoot,
     encoding: 'utf8',
@@ -84,7 +84,7 @@ async function getRepoRels(repoRoot, include = undefined, exclude = undefined) {
  * @param {string[] | undefined} exclude exclude specific absolute paths
  * @returns {Iterable<string>}
  */
-function getRepoRelsSync(repoRoot, include = undefined, exclude = undefined) {
+export function getRepoRelsSync(repoRoot, include = undefined, exclude = undefined) {
   const stdout = ChildProcess.execFileSync('git', getGitFlags(repoRoot, include, exclude), {
     cwd: repoRoot,
     encoding: 'utf8',
@@ -92,5 +92,3 @@ function getRepoRelsSync(repoRoot, include = undefined, exclude = undefined) {
 
   return parseLsFilesOutput(repoRoot, stdout);
 }
-
-module.exports = { getRepoRels, getRepoRelsSync };

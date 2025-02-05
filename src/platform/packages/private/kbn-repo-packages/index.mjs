@@ -20,7 +20,7 @@
 /** @typedef {Map<string, string>} PackageMap */
 /** @typedef {import('./modern/get_packages').PkgDirMap} PkgDirMap */
 
-const {
+export {
   getPackages,
   findPackageForPath,
   getPkgDirMap,
@@ -28,30 +28,13 @@ const {
   updatePackageMap,
   readHashOfPackageMap,
   readPackageMap,
-} = require('./modern/get_packages');
-const { readPackageManifest } = require('./modern/parse_package_manifest');
-const { Package } = require('./modern/package');
-const { parseKbnImportReq } = require('./modern/parse_kbn_import_req');
-const { getRepoRels, getRepoRelsSync } = require('./modern/get_repo_rels');
-const Jsonc = require('./utils/jsonc');
-const { getPluginPackagesFilter, getPluginSearchPaths } = require('./modern/plugins');
-const { readPackageJson } = require('./modern/parse_package_json');
+} from './modern/get_packages.mjs';
+export { readPackageManifest } from './modern/parse_package_manifest.mjs';
+export { Package } from './modern/package.mjs';
+export { parseKbnImportReq } from './modern/parse_kbn_import_req.mjs';
+export { getRepoRels, getRepoRelsSync } from './modern/get_repo_rels.mjs';
+export { getPluginPackagesFilter, getPluginSearchPaths } from './modern/plugins.mjs';
+export { readPackageJson } from './modern/parse_package_json.mjs';
 
-module.exports = {
-  Package,
-  readHashOfPackageMap,
-  readPackageMap,
-  getPackages,
-  getPkgDirMap,
-  getPkgsById,
-  updatePackageMap,
-  findPackageForPath,
-  readPackageManifest,
-  Jsonc,
-  getPluginPackagesFilter,
-  getPluginSearchPaths,
-  parseKbnImportReq,
-  getRepoRels,
-  getRepoRelsSync,
-  readPackageJson,
-};
+import * as Jsonc from './utils/jsonc.mjs';
+export { Jsonc };

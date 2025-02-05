@@ -11,14 +11,14 @@ import Path from 'path';
 import Fsp from 'fs/promises';
 
 import { REPO_ROOT } from '../../lib/paths.mjs';
-import External from '../../lib/external_packages.js';
+import { packages } from '../../lib/external_packages.mjs';
 
 /**
  *
  * @param {import('@kbn/some-dev-log').SomeDevLog} log
  */
 export async function sortPackageJson(log) {
-  const { sortPackageJson } = External['@kbn/sort-package-json']();
+  const { sortPackageJson } = packages['@kbn/sort-package-json']();
 
   const path = Path.resolve(REPO_ROOT, 'package.json');
   const json = await Fsp.readFile(path, 'utf8');

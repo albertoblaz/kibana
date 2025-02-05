@@ -9,11 +9,13 @@
 
 import Path from 'path';
 
-import External from '../../lib/external_packages.js';
+// import { packages } from '../../lib/external_packages.mjs';
 import { REPO_ROOT } from '../../lib/paths.mjs';
 
+import { getRepoRels } from '@kbn/repo-packages';
+
 export async function discovery() {
-  const { getRepoRels } = External['@kbn/repo-packages']();
+  // const { getRepoRels } = packages['@kbn/repo-packages']();
 
   /** @type {string[]} */
   const tsConfigRepoRels = [];

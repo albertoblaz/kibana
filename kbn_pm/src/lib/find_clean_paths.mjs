@@ -11,7 +11,7 @@ import Path from 'path';
 import Fs from 'fs';
 
 import { REPO_ROOT } from './paths.mjs';
-import External from './external_packages.js';
+import { packages } from './external_packages.mjs';
 
 /**
  * Attempt to load the package map, if bootstrap hasn't run successfully
@@ -21,7 +21,7 @@ import External from './external_packages.js';
  */
 async function tryToGetPackageMap(log) {
   try {
-    const { readPackageMap } = External['@kbn/repo-packages']();
+    const { readPackageMap } = packages['@kbn/repo-packages']();
     return readPackageMap();
   } catch (error) {
     log.warning('unable to load package map, unable to clean target directories in packages');

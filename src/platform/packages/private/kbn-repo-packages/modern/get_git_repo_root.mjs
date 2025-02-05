@@ -7,8 +7,8 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Path = require('path');
-const ChildProcess = require('child_process');
+import Path from 'path';
+import ChildProcess from 'child_process';
 
 const cache = new Map();
 
@@ -17,7 +17,7 @@ const cache = new Map();
  * @param {string} repoRoot
  * @returns {string | null}
  */
-function getGitRepoRootSync(repoRoot) {
+export function getGitRepoRootSync(repoRoot) {
   if (cache.has(repoRoot)) {
     return cache.get(repoRoot);
   }
@@ -40,5 +40,3 @@ function getGitRepoRootSync(repoRoot) {
     return null;
   }
 }
-
-module.exports = { getGitRepoRootSync };
