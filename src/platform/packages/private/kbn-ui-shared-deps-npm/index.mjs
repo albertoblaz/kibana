@@ -11,9 +11,13 @@
  * @typedef {'v8'} ThemeVersion
  */
 
-const Fs = require('fs');
-const Path = require('path');
-const { REPO_ROOT } = require('@kbn/repo-info');
+import Fs from 'fs';
+import Path from 'path';
+import { fileURLToPath } from 'url';
+import { REPO_ROOT } from '@kbn/repo-info';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
 
 const localDist = Path.resolve(__dirname, './shared_built_assets');
 const bazelDist = Path.resolve(REPO_ROOT, 'bazel-bin', Path.relative(REPO_ROOT, localDist));
@@ -22,7 +26,7 @@ const bazelDist = Path.resolve(REPO_ROOT, 'bazel-bin', Path.relative(REPO_ROOT, 
 const distDir = Fs.existsSync(localDist) ? localDist : bazelDist;
 const dllManifestPath = Path.resolve(distDir, 'kbn-ui-shared-deps-npm-manifest.json');
 const dllFilename = 'kbn-ui-shared-deps-npm.dll.js';
-const publicPathLoader = require.resolve('./src/public_path_loader');
+import publicPathLoader from './src/public_path_loader';
 
 module.exports = {
   /**
