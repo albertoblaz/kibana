@@ -437,8 +437,6 @@ const AllAssets = ({
                 gridStyleOverride={gridStyle}
                 rowLineHeightOverride="24px"
                 dataGridDensityState={DataGridDensity.EXPANDED}
-                showFullScreenButton
-                // showKeyboardShortcuts
               />
             )}
           </div>
