@@ -16,14 +16,9 @@ import { useHistory } from 'react-router-dom';
 import { useDataViewContext } from '../../hooks/data_view_context';
 import { useSpaceId } from '../../../common/hooks/use_space_id';
 import { URL_PARAM_KEY } from '../../../common/hooks/use_url_state';
-import { useGlobalTime } from '../../../common/containers/use_global_time';
+import { ASSET_INVENTORY_INDEX_PATTERN } from '../../constants';
 import { FilterGroupLoading } from './filters_loading';
 import { ASSET_INVENTORY_RULE_TYPE_IDS } from './rule_type_ids';
-
-const SECURITY_ASSET_INVENTORY_DATA_VIEW = {
-  id: 'asset-inventory-logs-default',
-  name: 'asset-inventory-logs',
-};
 
 const DEFAULT_ASSET_INVENTORY_FILTERS: FilterControlConfig[] = [
   {
@@ -58,7 +53,6 @@ export interface FiltersProps {
 
 export const Filters = ({ onFiltersChange }: FiltersProps) => {
   const { dataView: indexPattern, dataViewIsLoading, dataViewIsRefetching } = useDataViewContext();
-  const { from, to } = useGlobalTime();
   const spaceId = useSpaceId();
   const history = useHistory();
   const urlStorage = useMemo(
@@ -87,8 +81,8 @@ export const Filters = ({ onFiltersChange }: FiltersProps) => {
     () =>
       indexPattern
         ? {
-            id: SECURITY_ASSET_INVENTORY_DATA_VIEW.id,
-            name: SECURITY_ASSET_INVENTORY_DATA_VIEW.name,
+            id: 'cloud_asset_inventory-2773feaf-50bb-43f8-9fa9-8f9a5f85e566',
+            name: ASSET_INVENTORY_INDEX_PATTERN,
             allowNoIndex: true,
             title: indexPattern.title,
             timeFieldName: '@timestamp',
@@ -99,9 +93,6 @@ export const Filters = ({ onFiltersChange }: FiltersProps) => {
 
   const handleFilterChanges = useCallback(
     (newFilters: Filter[]) => {
-      if (!onFiltersChange) {
-        return;
-      }
       const updatedFilters = newFilters.map((filter) => {
         return {
           ...filter,
@@ -144,11 +135,6 @@ export const Filters = ({ onFiltersChange }: FiltersProps) => {
         setControlsUrlState={setFilterControlsUrlState}
         ControlGroupRenderer={ControlGroupRenderer}
         maxControls={4}
-        timeRange={{
-          from,
-          to,
-          mode: 'absolute',
-        }}
       />
       <EuiSpacer size="l" />
     </>
