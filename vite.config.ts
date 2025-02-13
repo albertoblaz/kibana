@@ -6,7 +6,15 @@
  * your election, the "Elastic License 2.0", the "GNU Affero General Public
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react-swc';
 
-module.exports = function (uid) {
-  return uid === 0;
-};
+// eslint-disable-next-line import/no-default-export
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      'node:fs': 'fs', // Example alias if Node.js built-in modules cause issues
+    },
+  },
+});

@@ -7,9 +7,9 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-require('../src/setup_node_env/root');
-require('../src/setup_node_env/node_version_validator');
-import('../kbn_pm/src/cli.mjs').catch(function (error) {
-  console.error('UNHANDLED EXCEPTION:', error.stack);
-  process.exit(1);
-});
+export function forceFn(argv) {
+  var rootIndex = argv.indexOf('--allow-root');
+  var force = rootIndex >= 0;
+  if (force) argv.splice(rootIndex, 1);
+  return force;
+}

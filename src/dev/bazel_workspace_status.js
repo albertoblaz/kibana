@@ -18,9 +18,12 @@
 // If the script exits with non-zero code, it's considered as a failure
 // and the output will be discarded.
 
+import cp from 'child_process';
+import os from 'os';
+
 (() => {
-  const cp = require('child_process');
-  const os = require('os');
+  // const cp = require('child_process');
+  // const os = require('os');
 
   function runCmd(cmd, args) {
     try {

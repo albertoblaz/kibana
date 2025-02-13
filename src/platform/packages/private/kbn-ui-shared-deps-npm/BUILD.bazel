@@ -76,7 +76,7 @@ webpack_cli(
   name = "shared_built_assets",
   data = RUNTIME_DEPS + SRCS + [
     "//:.browserslistrc",
-    ":webpack.config.js",
+    ":webpack.config.mjs",
 
     "@npm//webpack",
     "@npm//clean-webpack-plugin",
@@ -87,7 +87,7 @@ webpack_cli(
   output_dir = True,
   args = [
     "--config",
-    "$(location webpack.config.js)",
+    "$(location webpack.config.mjs)",
     "--output-path",
     "$(@D)",
     "--stats=errors-only"

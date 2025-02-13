@@ -7,12 +7,16 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Fs = require('fs');
-const Path = require('path');
-const Crypto = require('crypto');
+import Fs from 'fs';
+import Path from 'path';
+import Crypto from 'crypto';
+import { fileURLToPath } from 'url';
 
-const { Package } = require('./package');
-const { getRepoRelsSync } = require('./get_repo_rels');
+import { Package } from './package.mjs';
+import { getRepoRelsSync } from './get_repo_rels.mjs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
 
 const PACKAGE_MAP_PATH = Path.resolve(__dirname, '../package-map.json');
 
@@ -28,7 +32,7 @@ const CACHE = new Map();
  * Read the pkgmap from disk and parse it into a Map
  * @returns {Map<string, string>}
  */
-function readPackageMap() {
+export function readPackageMap() {
   return new Map(JSON.parse(Fs.readFileSync(PACKAGE_MAP_PATH, 'utf8')));
 }
 
@@ -36,7 +40,7 @@ function readPackageMap() {
  * Get the hash of the pkgmap, used for populating some cache keys
  * @returns {string}
  */
-function readHashOfPackageMap() {
+export function readHashOfPackageMap() {
   return Crypto.createHash('sha256').update(Fs.readFileSync(PACKAGE_MAP_PATH)).digest('hex');
 }
 
@@ -44,7 +48,7 @@ function readHashOfPackageMap() {
  * @param {string} repoRoot
  * @param {string[]} manifestPaths
  */
-function updatePackageMap(repoRoot, manifestPaths) {
+export function updatePackageMap(repoRoot, manifestPaths) {
   const existingContent = Fs.existsSync(PACKAGE_MAP_PATH)
     ? Fs.readFileSync(PACKAGE_MAP_PATH, 'utf8')
     : '';
@@ -98,7 +102,7 @@ function updatePackageMap(repoRoot, manifestPaths) {
  * @param {string} repoRoot
  * @returns {Package[]}
  */
-function getPackages(repoRoot) {
+export function getPackages(repoRoot) {
   /** @type {Array<import('./package').Package> | undefined} */
   const cached = CACHE.get(repoRoot);
   if (cached) {
@@ -130,7 +134,7 @@ function getPackages(repoRoot) {
  * Get a map of repoRelative directories to packages
  * @param {string} repoRoot
  */
-function getPkgDirMap(repoRoot) {
+export function getPkgDirMap(repoRoot) {
   const packages = getPackages(repoRoot);
 
   const cacheKey = `getPkgDirMap-${repoRoot}`;
@@ -150,7 +154,7 @@ function getPkgDirMap(repoRoot) {
  * @param {string} repoRoot
  * @returns {PkgsById}
  */
-function getPkgsById(repoRoot) {
+export function getPkgsById(repoRoot) {
   const packages = getPackages(repoRoot);
 
   const cacheKey = `getPkgsById-${repoRoot}`;
@@ -193,16 +197,6 @@ function findClosest(repoRelDir, map) {
  * @param {string} repoRoot
  * @param {string} path absolute path to a file
  */
-function findPackageForPath(repoRoot, path) {
+export function findPackageForPath(repoRoot, path) {
   return findClosest(Path.relative(repoRoot, Path.dirname(path)), getPkgDirMap(repoRoot));
 }
-
-module.exports = {
-  getPackages,
-  getPkgDirMap,
-  getPkgsById,
-  updatePackageMap,
-  findPackageForPath,
-  readPackageMap,
-  readHashOfPackageMap,
-};

@@ -50,7 +50,7 @@ const isEscaped = (jsonString, quotePosition) => {
  * @param {string} jsonString
  * @param {{ whitespace?: boolean; trailingCommas?: boolean }} options
  */
-function stripJsonComments(jsonString, { whitespace = true, trailingCommas = false } = {}) {
+export function stripJsonComments(jsonString, { whitespace = true, trailingCommas = false } = {}) {
   if (typeof jsonString !== 'string') {
     throw new TypeError(
       `Expected argument \`jsonString\` to be a \`string\`, got \`${typeof jsonString}\``
@@ -149,5 +149,3 @@ function stripJsonComments(jsonString, { whitespace = true, trailingCommas = fal
     result + buffer + (isInsideComment ? strip(jsonString.slice(offset)) : jsonString.slice(offset))
   );
 }
-
-module.exports = { stripJsonComments };

@@ -7,12 +7,9 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-var force = require('./force')(process.argv);
-
-var uid = process.getuid && process.getuid();
-var isRoot = require('./is_root')(uid);
-
-if (isRoot && !force) {
-  console.error('Kibana should not be run as root.  Use --allow-root to continue.');
+import '../src/setup_node_env/root/index.mjs';
+import '../src/setup_node_env/node_version_validator.mjs';
+import('../kbn_pm/src/cli.mjs').catch(function (error) {
+  console.error('UNHANDLED EXCEPTION:', error.stack);
   process.exit(1);
-}
+});

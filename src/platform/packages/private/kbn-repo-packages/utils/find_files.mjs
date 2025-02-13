@@ -7,8 +7,8 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Path = require('path');
-const Fs = require('fs');
+import Path from 'path';
+import Fs from 'fs';
 
 /**
  * @param {string} path
@@ -49,7 +49,7 @@ function safeReadDir(path) {
  * @param {string} name
  * @returns {string[]}
  */
-function findFiles(packageDir, name) {
+export function findFiles(packageDir, name) {
   return (
     // get the directories within the "package dir"
     safeReadDir(packageDir)
@@ -72,7 +72,7 @@ function findFiles(packageDir, name) {
  * @param {string} cwd
  * @param {string[]} patterns
  */
-function expandWildcards(cwd, patterns) {
+export function expandWildcards(cwd, patterns) {
   /** @type {Set<string>} */
   const results = new Set();
 
@@ -111,5 +111,3 @@ function expandWildcards(cwd, patterns) {
 
   return [...results];
 }
-
-module.exports = { findFiles, expandWildcards };

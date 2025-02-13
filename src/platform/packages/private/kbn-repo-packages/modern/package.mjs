@@ -7,12 +7,12 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const { inspect } = require('util');
-const Path = require('path');
+import { inspect } from 'util';
+import Path from 'path';
 
-const { readPackageJson } = require('./parse_package_json');
-const { PLUGIN_CATEGORY } = require('./plugin_category_info');
-const { readPackageManifest } = require('./parse_package_manifest');
+import { readPackageJson } from './parse_package_json.mjs';
+import { PLUGIN_CATEGORY } from './plugin_category_info.mjs';
+import { readPackageManifest } from './parse_package_manifest.mjs';
 
 /**
  * Normalize a path for operating systems which use backslashes
@@ -24,7 +24,7 @@ const normalize = (path) => (Path.sep !== '/' ? path.split('\\').join('/') : pat
  * Representation of a Bazel Package in the Kibana repository
  * @class
  */
-class Package {
+export class Package {
   /**
    * Create a Package object from a package directory. Reads some files from the package and returns
    * a Promise for a Package instance.
@@ -242,7 +242,3 @@ class Package {
     return `${this.isPlugin() ? `PluginPackage` : `Package`}<${this.normalizedRepoRelativeDir}>`;
   }
 }
-
-module.exports = {
-  Package,
-};

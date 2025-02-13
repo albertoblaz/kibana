@@ -7,13 +7,13 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Path = require('path');
+import Path from 'path';
 
 /**
  * @param {{ rootDir: string }} options
  * @returns {string[]}
  */
-function getPluginSearchPaths({ rootDir }) {
+export function getPluginSearchPaths({ rootDir }) {
   return [Path.resolve(rootDir, '../kibana-extra'), Path.resolve(rootDir, 'plugins')];
 }
 
@@ -89,7 +89,7 @@ function matchBrowserServer(selector, pkg) {
 /**
  * @param {import('./types').PluginSelector} selector
  */
-function getPluginPackagesFilter(selector = {}) {
+export function getPluginPackagesFilter(selector = {}) {
   /**
    * @param {import('./package').Package} pkg
    * @returns {pkg is import('./types').PluginPackage}
@@ -106,7 +106,7 @@ function getPluginPackagesFilter(selector = {}) {
 /**
  * @returns {(pkg: import('./package').Package) => boolean}
  */
-function getDistributablePacakgesFilter() {
+export function getDistributablePacakgesFilter() {
   return (pkg) => {
     if (pkg.isDevOnly()) {
       return false;
@@ -120,5 +120,3 @@ function getDistributablePacakgesFilter() {
     return !(type.example || type.testPlugin);
   };
 }
-
-module.exports = { getPluginSearchPaths, getPluginPackagesFilter, getDistributablePacakgesFilter };

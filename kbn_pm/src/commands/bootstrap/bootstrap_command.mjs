@@ -9,7 +9,7 @@
 
 import { run } from '../../lib/spawn.mjs';
 import * as Bazel from '../../lib/bazel.mjs';
-import External from '../../lib/external_packages.js';
+import { packages as externalPackages } from '../../lib/external_packages.mjs';
 
 import { haveNodeModulesBeenManuallyDeleted, removeYarnIntegrityFileIfExists } from './yarn.mjs';
 import { setupRemoteCache } from './setup_remote_cache.mjs';
@@ -125,7 +125,8 @@ export const command = {
       validate
         ? time('validate dependencies', async () => {
             // now that deps are installed we can import `@kbn/yarn-lock-validator`
-            const { readYarnLock, validateDependencies } = External['@kbn/yarn-lock-validator']();
+            const { readYarnLock, validateDependencies } =
+              externalPackages['@kbn/yarn-lock-validator']();
             await validateDependencies(log, await readYarnLock());
           })
         : undefined,

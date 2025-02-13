@@ -7,19 +7,6 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const { stripJsonComments } = require('./strip_json_comments');
-
-/**
- * @param {string} jsonWithComments
- * @returns {unknown}
- */
-function parse(jsonWithComments) {
-  return JSON.parse(
-    stripJsonComments(jsonWithComments, {
-      whitespace: false,
-      trailingCommas: true,
-    })
-  );
+export function isRootFn(uid) {
+  return uid === 0;
 }
-
-module.exports = { parse };

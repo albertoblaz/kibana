@@ -7,15 +7,15 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-const Path = require('path');
-const webpack = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import Path from 'path';
+import webpack from 'webpack';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
-const UiSharedDepsNpm = require('.');
+import UiSharedDepsNpm from './index.mjs';
 
-const MOMENT_SRC = require.resolve('moment/min/moment-with-locales.js');
-const WEBPACK_SRC = require.resolve('webpack');
+import MOMENT_SRC from 'moment/min/moment-with-locales.js';
+import WEBPACK_SRC from 'webpack';
 
 const REPO_ROOT = Path.resolve(__dirname, '..', '..', '..', '..', '..');
 

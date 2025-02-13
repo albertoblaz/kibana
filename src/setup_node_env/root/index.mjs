@@ -7,9 +7,15 @@
  * License v3.0 only", or the "Server Side Public License, v 1".
  */
 
-module.exports = function (argv) {
-  var rootIndex = argv.indexOf('--allow-root');
-  var force = rootIndex >= 0;
-  if (force) argv.splice(rootIndex, 1);
-  return force;
-};
+import { forceFn } from './force.mjs';
+import { isRootFn } from './is_root.mjs';
+
+var force = forceFn(process.argv);
+var uid = process.getuid && process.getuid();
+
+var isRoot = isRootFn(uid);
+
+if (isRoot && !force) {
+  console.error('Kibana should not be run as root.  Use --allow-root to continue.');
+  process.exit(1);
+}
