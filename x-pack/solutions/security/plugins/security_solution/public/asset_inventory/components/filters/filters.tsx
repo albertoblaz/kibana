@@ -52,7 +52,7 @@ export interface FiltersProps {
 }
 
 export const Filters = ({ onFiltersChange }: FiltersProps) => {
-  const { dataView: indexPattern, dataViewIsLoading, dataViewIsRefetching } = useDataViewContext();
+  const { dataView, dataViewIsLoading, dataViewIsRefetching } = useDataViewContext();
   const spaceId = useSpaceId();
   const history = useHistory();
   const urlStorage = useMemo(
@@ -79,16 +79,16 @@ export const Filters = ({ onFiltersChange }: FiltersProps) => {
 
   const dataViewSpec = useMemo(
     () =>
-      indexPattern
+      dataView
         ? {
             id: 'cloud_asset_inventory-2773feaf-50bb-43f8-9fa9-8f9a5f85e566',
             name: ASSET_INVENTORY_INDEX_PATTERN,
             allowNoIndex: true,
-            title: indexPattern.title,
+            title: dataView.getIndexPattern(),
             timeFieldName: '@timestamp',
           }
         : null,
-    [indexPattern]
+    [dataView]
   );
 
   const handleFilterChanges = useCallback(
