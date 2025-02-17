@@ -27,7 +27,7 @@ interface UseAssetsOptions extends FindingsBaseEsQuery {
   pageSize: number;
 }
 
-const ASSET_INVENTORY_TABLE_RUNTIME_MAPPING_FIELDS: string[] = ['asset.risk', 'asset.name'];
+const ASSET_INVENTORY_TABLE_RUNTIME_MAPPING_FIELDS: string[] = ['entity.id', 'entity.name'];
 
 const getRuntimeMappingsFromSort = (sort: string[][]) => {
   return sort
@@ -92,14 +92,14 @@ const getAssetsQuery = (
         ...query?.bool,
         filter: [
           ...(query?.bool?.filter ?? []),
-          {
-            range: {
-              '@timestamp': {
-                gte: 'now-90d',
-                lte: 'now',
-              },
-            },
-          },
+          // {
+          //   range: {
+          //     '@timestamp': {
+          //       gte: 'now-90d',
+          //       lte: 'now',
+          //     },
+          //   },
+          // },
         ],
         must_not: [...(query?.bool?.must_not ?? []), ...mutedRulesFilterQuery],
       },
