@@ -14,3 +14,30 @@ export interface AssetInventoryRoutesDeps {
   logger: Logger;
   config: ConfigType;
 }
+
+export interface AssetBucket {
+  key: string | undefined;
+  doc_count?: number;
+  category: {
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
+    buckets: Array<{
+      key?: string;
+      doc_count?: string;
+    }>;
+  };
+  source: {
+    doc_count_error_upper_bound: number;
+    sum_other_doc_count: number;
+    buckets: Array<{
+      key?: string;
+      doc_count?: string;
+    }>;
+  };
+}
+
+export interface AssetsQueryResult {
+  assets: {
+    buckets: AssetBucket[];
+  };
+}

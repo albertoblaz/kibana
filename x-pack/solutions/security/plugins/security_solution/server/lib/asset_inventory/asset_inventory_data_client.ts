@@ -5,9 +5,10 @@
  * 2.0.
  */
 
-import type { Logger, IScopedClusterClient } from '@kbn/core/server';
-
+import type { SearchRequest } from '@elastic/elasticsearch/lib/api/types';
+import type { Logger, IScopedClusterClient, ElasticsearchClient } from '@kbn/core/server';
 import type { ExperimentalFeatures } from '../../../common';
+import type { AssetsQueryResult } from './types';
 
 interface AssetInventoryClientOpts {
   logger: Logger;
@@ -18,7 +19,12 @@ interface AssetInventoryClientOpts {
 // AssetInventoryDataClient is responsible for managing the asset inventory,
 // including initializing and cleaning up resources such as Elasticsearch ingest pipelines.
 export class AssetInventoryDataClient {
-  constructor(private readonly options: AssetInventoryClientOpts) {}
+  private esClient: ElasticsearchClient;
+
+  constructor(private readonly options: AssetInventoryClientOpts) {
+    const { clusterClient } = options;
+    this.esClient = clusterClient.asCurrentUser;
+  }
 
   // Enables the asset inventory by deferring the initialization to avoid blocking the main thread.
   public async enable() {
@@ -69,6 +75,29 @@ export class AssetInventoryDataClient {
       return { deleted: true };
     } catch (err) {
       logger.error(`Error deleting asset inventory: ${err.message}`);
+      throw err;
+    }
+  }
+
+  // Returns the top ten assets grouped by type
+  public async topAssets(getTopAssetsQuery: () => SearchRequest) {
+    const { logger } = this.options;
+    logger.debug('Returning top assets');
+
+    try {
+      const queryResult = await this.esClient.search<unknown, AssetsQueryResult>(
+        getTopAssetsQuery()
+      );
+
+      logger.debug('Returned top assets');
+      // if (!queryResult?.aggregations?.assets) return [];
+      if (!queryResult?.aggregations?.assets) return { topAssets: [] };
+
+      return { topAssets: queryResult.aggregations.assets.buckets };
+      // return queryResult.aggregations.assets.buckets;
+      // return { topAssets: true };
+    } catch (err) {
+      logger.error(`Error returning top assets: ${err.message}`);
       throw err;
     }
   }
