@@ -5,51 +5,38 @@
  * 2.0.
  */
 
+import { SECURITY_SOLUTION_ENABLE_ASSET_INVENTORY_SETTING } from '@kbn/management-settings-ids';
 import { getDataTestSubjectSelector } from '../../helpers/common';
 import { login } from '../../tasks/login';
 import { visit } from '../../tasks/navigation';
+import { setKibanaSetting } from '../../tasks/api_calls/kibana_advanced_settings';
 import { ASSET_INVENTORY_URL } from '../../urls/navigation';
 
 const NO_PRIVILEGES_BOX = getDataTestSubjectSelector('noPrivilegesPage');
 const ALL_ASSETS_TITLE = getDataTestSubjectSelector('all-assets-title');
 
-describe(
-  'Asset Inventory page - uiSetting disabled',
-  {
-    tags: ['@ess'],
-  },
-  () => {
-    beforeEach(() => {
-      login();
-      visit(ASSET_INVENTORY_URL);
-    });
+describe('Asset Inventory page - uiSetting disabled', { tags: ['@ess', '@serverless'] }, () => {
+  beforeEach(() => {
+    setKibanaSetting(SECURITY_SOLUTION_ENABLE_ASSET_INVENTORY_SETTING, false);
+    login();
+    visit(ASSET_INVENTORY_URL);
+  });
 
-    it('should display Privileges Required box', () => {
-      cy.get(NO_PRIVILEGES_BOX).should('be.visible');
-      cy.get(ALL_ASSETS_TITLE).should('not.be.visible');
-    });
-  }
-);
+  it('should display Privileges Required box', () => {
+    cy.get(NO_PRIVILEGES_BOX).should('be.visible');
+    cy.get(ALL_ASSETS_TITLE).should('not.exist');
+  });
+});
 
-describe(
-  'Asset Inventory page - uiSetting enabled',
-  {
-    env: {
-      ftrConfig: {
-        kbnServerArgs: ['--uiSettings.overrides.securitySolution:enableAssetInventory=true'],
-      },
-    },
-    tags: ['@ess'],
-  },
-  () => {
-    beforeEach(() => {
-      login();
-      visit(ASSET_INVENTORY_URL);
-    });
+describe('Asset Inventory page - uiSetting enabled', { tags: ['@ess', '@serverless'] }, () => {
+  beforeEach(() => {
+    setKibanaSetting(SECURITY_SOLUTION_ENABLE_ASSET_INVENTORY_SETTING, true);
+    login();
+    visit(ASSET_INVENTORY_URL);
+  });
 
-    it('should display All assets title', () => {
-      cy.get(NO_PRIVILEGES_BOX).should('not.be.visible');
-      cy.get(ALL_ASSETS_TITLE).should('be.visible');
-    });
-  }
-);
+  it('should display All assets title', () => {
+    cy.get(NO_PRIVILEGES_BOX).should('not.exist');
+    cy.get(ALL_ASSETS_TITLE).should('be.visible');
+  });
+});
