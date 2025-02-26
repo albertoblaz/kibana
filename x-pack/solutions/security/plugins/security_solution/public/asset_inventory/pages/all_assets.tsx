@@ -473,7 +473,8 @@ const AllAssets = () => {
                 showTimeCol={false}
                 settings={settings}
                 onFetchMoreRecords={loadMore}
-                externalControlColumns={externalControlColumns}
+                // externalControlColumns={externalControlColumns}
+                rowAdditionalLeadingControls={externalControlColumns}
                 externalCustomRenderers={externalCustomRenderers}
                 externalAdditionalControls={externalAdditionalControls}
                 gridStyleOverride={gridStyle}
